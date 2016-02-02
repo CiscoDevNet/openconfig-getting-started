@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="100">
+  <edit-config>
+    <target>
+      <candidate/>
+    </target>
+    <error-option>rollback-on-error</error-option>
+    <config>
+      <routing-policy xmlns="http://openconfig.net/yang/routing-policy">
+        <policy-definitions>
+          <policy-definition>
+            <name>POLICY4</name>
+            <statements>
+              <statement>
+                <name>next-hop-self</name>
+                <actions>
+                  <bgp-actions xmlns="http://openconfig.net/yang/bgp-policy">
+                    <set-next-hop>SELF</set-next-hop>
+                  </bgp-actions>
+                  <accept-route/>
+                </actions>
+              </statement>
+            </statements>
+          </policy-definition>
+        </policy-definitions>
+      </routing-policy>
+    </config>
+  </edit-config>
+</rpc>

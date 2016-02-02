@@ -1,0 +1,23 @@
+as-path-set AS-PATH-SET1
+  ios-regex '^65172'
+end-set
+!
+community-set COMMUNITY-SET1
+  ios-regex '^65172:17...$',
+  65172:16001
+end-set
+!
+route-policy POLICY2
+  #statement-name community-set1
+  if community matches-every COMMUNITY-SET1 then
+    done
+  endif
+  #statement-name as-path-set1
+  if as-path in AS-PATH-SET1 then
+    set local-preference 50
+    done  
+  endif   
+  #statement-name reject route
+  drop    
+end-policy
+!         

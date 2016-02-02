@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<routing-policy xmlns="http://openconfig.net/yang/routing-policy">
+  <policy-definitions>
+    <policy-definition>
+      <name>POLICY1</name>
+      <statements>
+        <statement>
+          <name>accept</name>
+          <actions>
+            <accept-route/>
+          </actions>
+        </statement>
+      </statements>
+    </policy-definition>
+  </policy-definitions>
+</routing-policy>

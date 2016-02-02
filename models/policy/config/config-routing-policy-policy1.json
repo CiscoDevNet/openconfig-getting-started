@@ -1,0 +1,24 @@
+{
+ "routing-policy:routing-policy": {
+   "policy-definitions": {
+    "policy-definition": [
+     {   
+      "name": "POLICY1",
+      "statements": {
+       "statement": [
+        {
+         "name": "accept route",
+         "actions": {
+          "accept-route": [
+           null
+         ]
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}
+

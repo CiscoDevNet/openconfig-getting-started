@@ -1,0 +1,26 @@
+{
+ "routing-policy:routing-policy": {
+   "policy-definitions": {
+    "policy-definition": [
+    {
+     "name": "POLICY4",
+     "statements": {
+      "statement": [
+       {
+        "name": "next-hop-self",
+        "actions": {
+         "bgp-policy:bgp-actions": {
+          "set-next-hop": "SELF"
+         },
+         "accept-route": [
+          null
+         ]
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,6 @@
+route-policy POLICY4
+  #statement-name next-hop-self
+  set next-hop self
+  done
+end-policy
+!

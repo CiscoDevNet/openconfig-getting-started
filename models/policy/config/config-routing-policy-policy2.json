@@ -1,0 +1,83 @@
+{
+ "routing-policy:routing-policy": {
+  "defined-sets": {
+   "bgp-policy:bgp-defined-sets": {
+    "as-path-sets": {
+     "as-path-set": [
+      {
+       "as-path-set-name": "AS-PATH-SET1",
+       "as-path-set-member": [
+        "^65172"
+       ]
+      }
+     ]
+    },
+    "community-sets": {
+     "community-set": [
+      {
+       "community-set-name": "COMMUNITY-SET1",
+       "community-member": [
+        "ios-regex '^65172:17...$'",
+        "65172:16001"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "policy-definitions": {
+   "policy-definition": [
+    {
+     "name": "POLICY2",
+     "statements": {
+      "statement": [
+       {
+        "name": "community-set1",
+        "conditions": {
+         "bgp-policy:bgp-conditions": {
+          "match-community-set": {
+           "community-set": "COMMUNITY-SET1",
+           "match-set-options": "ALL"
+          }
+         }
+        },
+        "actions": {
+         "accept-route": [
+          null
+         ]
+        }
+       },
+       {
+        "name": "as-path-set1",
+        "conditions": {
+         "bgp-policy:bgp-conditions": {
+          "match-as-path-set": {
+           "as-path-set": "AS-PATH-SET1",
+           "match-set-options": "ANY"
+          }
+         }
+        },
+        "actions": {
+         "bgp-policy:bgp-actions": {
+          "set-local-pref": 50
+         },
+         "accept-route": [
+          null
+         ]
+        }
+       },
+       {
+        "name": "reject route",
+        "actions": {
+         "reject-route": [
+          null
+         ]
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "routing-policy:routing-policy": {
+  "defined-sets": {
+   "prefix-sets": {
+    "prefix-set": [
+     {
+      "prefix-set-name": "PREFIX-SET1",
+      "prefix": [
+       {
+        "ip-prefix": "10.0.0.0/16",
+        "masklength-range": "24..32"
+       },
+       {
+        "ip-prefix": "172.0.0.0/8",
+        "masklength-range": "16..32"
+       }
+      ]
+     }
+    ]
+   },
+   "bgp-policy:bgp-defined-sets": {
+    "community-sets": {
+     "community-set": [
+      {   
+       "community-set-name": "COMMUNITY-SET2",
+       "community-member": [
+        "65172:17001"
+       ]
+      }   
+     ]   
+    }   
+   }   
+  },
+  "policy-definitions": {
+   "policy-definition": [
+    {
+     "name": "POLICY3",
+     "statements": {
+      "statement": [
+       {
+        "name": "prefix-set1",
+        "conditions": {
+         "match-prefix-set": {
+          "prefix-set": "PREFIX-SET1",
+          "match-set-options": "ANY"
+         }
+        },
+        "actions": {
+         "bgp-policy:bgp-actions": {
+          "set-local-pref": 1000,
+          "set-community": {
+           "community-set-ref": "COMMUNITY-SET2"
+          }
+         },
+         "accept-route": [
+          null
+         ]
+        }
+       },
+       {
+        "name": "reject",
+        "actions": {
+         "reject-route": [
+          null
+         ]
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}
+

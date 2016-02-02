@@ -1,0 +1,35 @@
+module: routing-policy
+   +--rw routing-policy
+      +--rw defined-sets
+      |  +--rw prefix-sets
+      |  |  +--rw prefix-set* [prefix-set-name]
+      |  |     +--rw prefix-set-name    string
+      |  |     +--rw prefix* [ip-prefix masklength-range]
+      |  |        +--rw ip-prefix           inet:ip-prefix
+      |  |        +--rw masklength-range    string
+      |  +--rw tag-sets
+      |     +--rw tag-set* [tag-set-name]
+      |        +--rw tag-set-name    string
+      |        +--rw tag* [value]
+      |           +--rw value    pt:tag-type
+      +--rw policy-definitions
+         +--rw policy-definition* [name]
+            +--rw name          string
+            +--rw statements
+               +--rw statement* [name]
+                  +--rw name          string
+                  +--rw conditions
+                  |  +--rw call-policy?           -> /routing-policy/policy-definitions/policy-definition/name
+                  |  +--rw match-prefix-set!
+                  |  |  +--rw prefix-set?          -> /routing-policy/defined-sets/prefix-sets/prefix-set/prefix-set-name
+                  |  |  +--rw match-set-options?   pt:match-set-options-restricted-type
+                  |  +--rw match-tag-set!
+                  |  |  +--rw tag-set?             -> /routing-policy/defined-sets/tag-sets/tag-set/tag-set-name
+                  |  |  +--rw match-set-options?   pt:match-set-options-restricted-type
+                  |  +--rw install-protocol-eq?   identityref
+                  +--rw actions
+                     +--rw (route-disposition)?
+                        +--:(accept-route)
+                        |  +--rw accept-route?   empty
+                        +--:(reject-route)
+                           +--rw reject-route?   empty

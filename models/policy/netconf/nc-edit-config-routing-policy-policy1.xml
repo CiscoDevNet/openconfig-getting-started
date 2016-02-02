@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="100">
+  <edit-config>
+    <target>
+      <candidate/>
+    </target>
+    <error-option>rollback-on-error</error-option>
+    <config>
+      <routing-policy xmlns="http://openconfig.net/yang/routing-policy">
+        <policy-definitions>
+          <policy-definition>
+            <name>POLICY1</name>
+            <statements>
+              <statement>
+                <name>accept</name>
+                <actions>
+                  <accept-route/>
+                </actions>
+              </statement>
+            </statements>
+          </policy-definition>
+        </policy-definitions>
+      </routing-policy>
+    </config>
+  </edit-config>
+</rpc>

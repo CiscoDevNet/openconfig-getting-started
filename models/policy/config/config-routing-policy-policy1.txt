@@ -1,0 +1,5 @@
+route-policy POLICY1
+  #statement-name accept route
+  done
+end-policy
+!

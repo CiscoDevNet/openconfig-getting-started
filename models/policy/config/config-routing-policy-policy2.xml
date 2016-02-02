@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<routing-policy xmlns="http://openconfig.net/yang/routing-policy">
+  <defined-sets>
+    <bgp-defined-sets xmlns="http://openconfig.net/yang/bgp-policy">
+      <as-path-sets>
+        <as-path-set>
+          <as-path-set-name>AS-PATH-SET1</as-path-set-name>
+          <as-path-set-member>^65172</as-path-set-member>
+        </as-path-set>
+      </as-path-sets>
+      <community-sets>
+        <community-set>
+          <community-set-name>COMMUNITY-SET1</community-set-name>
+          <community-member>ios-regex '^65172:17...$'</community-member>
+          <community-member>65172:16001</community-member>
+        </community-set>
+      </community-sets>
+    </bgp-defined-sets>
+  </defined-sets>
+  <policy-definitions>
+    <policy-definition>
+      <name>POLICY2</name>
+      <statements>
+        <statement>
+          <name>community-set1</name>
+          <conditions>
+            <bgp-conditions xmlns="http://openconfig.net/yang/bgp-policy">
+              <match-community-set>
+                <community-set>COMMUNITY-SET1</community-set>
+                <match-set-options>ALL</match-set-options>
+              </match-community-set>
+            </bgp-conditions>
+          </conditions>
+          <actions>
+            <accept-route/>
+          </actions>
+        </statement>
+        <statement>
+          <name>as-path-set1</name>
+          <conditions>
+            <bgp-conditions xmlns="http://openconfig.net/yang/bgp-policy">
+              <match-as-path-set>
+                <as-path-set>AS-PATH-SET1</as-path-set>
+                <match-set-options>ANY</match-set-options>
+              </match-as-path-set>
+            </bgp-conditions>
+          </conditions>
+          <actions>
+            <bgp-actions xmlns="http://openconfig.net/yang/bgp-policy">
+              <set-local-pref>50</set-local-pref>
+            </bgp-actions>
+            <accept-route/>
+          </actions>
+        </statement>
+        <statement>
+          <name>reject</name>
+          <actions>
+            <reject-route/>
+          </actions>
+        </statement>
+      </statements>
+    </policy-definition>
+  </policy-definitions>
+</routing-policy>
