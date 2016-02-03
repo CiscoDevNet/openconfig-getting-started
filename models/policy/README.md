@@ -28,13 +28,13 @@ tree/routing-policy-2015-05-15-cisco-xr-devs-tree.txt
 ```
 
 ## Data Examples in this Guide
-All examples in this guide are presented in JSON and XML format.  As of release 6.0.0, YANG models can be exercised using NETCONF and gRPC.  You can use JSON examples with a gRPC client and the XML examples with a NETCONF client.  
+All examples in this guide are presented in JSON and XML format.  As of release 6.0.0, YANG models can be exercised using NETCONF and gRPC.  You can use JSON examples with a gRPC client and the XML examples with a NETCONF client.   The configuration examples in this guide are applied in the [OC-BGP guide](../bgp). 
 
 ---
 ## Filtering OC-RPOL Data
 You can specify filters when retrieving configuration and operational data. An empty filter may be used when retrieving configuration. It results on data for all device models (Openconfig and non-OpenConfig) being retrieved.  An empty filter is rejected when retrieving operational data.
 
-The OC-RPOL model has two high-level components: `defined-sets` and `policy-definitions`.  The most general filter you can define includes the entire data tree for the model (both set and policy definitions):
+The OC-RPOL model has two top-level components: `defined-sets` and `policy-definitions`.  The most general filter you can define includes the entire data tree for the model (both set and policy definitions):
 
 XML
 ```xml
@@ -489,5 +489,6 @@ end-policy
 ### Caveats
 * When a route policy is defined or modified via the OC-RPOL model, the entire policy must be specified.
 * The BGP implementation in Cisco IOS XR only accepts a single policy at a given attachment point.  If a configuration specifies a list of policies, the last entry in the list is applied and the other policies are ignored.  In order to apply multiple policies, the configuration must use a parent policy that groups the other policies.  That parent policy can then be attached at the desired attachment point.
+* OpenConfig models are not compatible with FlexCLI (apply groups).
 
 ---
