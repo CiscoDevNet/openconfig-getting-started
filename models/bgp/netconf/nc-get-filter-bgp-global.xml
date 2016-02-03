@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="100">
+  <get>
+    <filter>
+      <bgp xmlns="http://openconfig.net/yang/bgp">
+        <global/>
+      </bgp>
+    </filter>
+  </get>
+</rpc>

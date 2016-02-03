@@ -1,0 +1,3 @@
+<bgp xmlns="http://openconfig.net/yang/bgp">
+  <peer-groups/>
+</bgp>

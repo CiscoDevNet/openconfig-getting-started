@@ -1,0 +1,15 @@
+router bgp 65001
+ address-family ipv4 unicast
+ !
+ neighbor-group EBGP
+  remote-as 65002
+  address-family ipv4 unicast
+   route-policy POLICY3 in
+   route-policy POLICY1 out
+  !
+ !
+ neighbor 192.168.1.1
+  use neighbor-group EBGP
+ !
+!
+

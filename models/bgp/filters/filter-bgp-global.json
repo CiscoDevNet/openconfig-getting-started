@@ -1,0 +1,7 @@
+{
+    "bgp:bgp": {
+        "global": [
+            null
+        ]
+    }
+}

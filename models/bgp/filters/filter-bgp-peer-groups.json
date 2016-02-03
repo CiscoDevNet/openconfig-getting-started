@@ -1,0 +1,7 @@
+{
+    "bgp:bgp": {
+        "peer-groups": [
+            null
+        ]
+    }
+}

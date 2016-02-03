@@ -1,0 +1,63 @@
+{
+ "bgp:bgp": {
+  "global": {
+   "config": {
+    "as": 65001
+   },
+   "afi-safis": {
+    "afi-safi": [
+     {
+      "afi-safi-name": "ipv4-unicast",
+      "config": {
+       "afi-safi-name": "ipv4-unicast",
+       "enabled": true
+      }
+     }
+    ]
+   }
+  },
+  "peer-groups": {
+   "peer-group": [
+    {
+     "peer-group-name": "EBGP",
+     "config": {
+      "peer-group-name": "EBGP",
+      "peer-as": 65002
+     },
+     "afi-safis": {
+      "afi-safi": [
+       {
+        "afi-safi-name": "ipv4-unicast",
+        "config": {
+         "afi-safi-name": "ipv4-unicast",
+         "enabled": true
+        },
+        "apply-policy": {
+         "config": {
+          "import-policy": [
+           "POLICY3"
+          ],
+          "export-policy": [
+           "POLICY1"
+          ]
+         }
+        }
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "neighbors": {
+   "neighbor": [
+    {
+     "neighbor-address": "192.168.1.1",
+     "config": {
+      "neighbor-address": "192.168.1.1",
+      "peer-group": "EBGP"
+     }
+    }
+   ]
+  }
+ }
+}
