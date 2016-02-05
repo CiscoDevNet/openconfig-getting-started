@@ -8,10 +8,20 @@ module: routing-policy
       |  |        +--rw ip-prefix           inet:ip-prefix
       |  |        +--rw masklength-range    string
       |  +--rw tag-sets
-      |     +--rw tag-set* [tag-set-name]
-      |        +--rw tag-set-name    string
-      |        +--rw tag* [value]
-      |           +--rw value    pt:tag-type
+      |  |  +--rw tag-set* [tag-set-name]
+      |  |     +--rw tag-set-name    string
+      |  |     +--rw tag* [value]
+      |  |        +--rw value    pt:tag-type
+      |  +--rw bgp-pol:bgp-defined-sets
+      |     +--rw bgp-pol:community-sets
+      |     |  +--rw bgp-pol:community-set* [community-set-name]
+      |     |     +--rw bgp-pol:community-set-name    string
+      |     |     +--rw bgp-pol:community-member*     union
+      |     +--rw bgp-pol:ext-community-sets
+      |     +--rw bgp-pol:as-path-sets
+      |        +--rw bgp-pol:as-path-set* [as-path-set-name]
+      |           +--rw bgp-pol:as-path-set-name      string
+      |           +--rw bgp-pol:as-path-set-member*   string
       +--rw policy-definitions
          +--rw policy-definition* [name]
             +--rw name          string
@@ -19,17 +29,45 @@ module: routing-policy
                +--rw statement* [name]
                   +--rw name          string
                   +--rw conditions
-                  |  +--rw call-policy?           -> /routing-policy/policy-definitions/policy-definition/name
+                  |  +--rw call-policy?              -> /routing-policy/policy-definitions/policy-definition/name
                   |  +--rw match-prefix-set!
                   |  |  +--rw prefix-set?          -> /routing-policy/defined-sets/prefix-sets/prefix-set/prefix-set-name
                   |  |  +--rw match-set-options?   pt:match-set-options-restricted-type
                   |  +--rw match-tag-set!
                   |  |  +--rw tag-set?             -> /routing-policy/defined-sets/tag-sets/tag-set/tag-set-name
                   |  |  +--rw match-set-options?   pt:match-set-options-restricted-type
-                  |  +--rw install-protocol-eq?   identityref
+                  |  +--rw install-protocol-eq?      identityref
+                  |  +--rw bgp-pol:bgp-conditions
+                  |     +--rw bgp-pol:match-community-set!
+                  |     |  +--rw bgp-pol:community-set?       -> /rpol:routing-policy/defined-sets/bgp-pol:bgp-defined-sets/community-sets/community-set/community-set-name
+                  |     |  +--rw bgp-pol:match-set-options?   pt:match-set-options-type
+                  |     +--rw bgp-pol:match-as-path-set!
+                  |     |  +--rw bgp-pol:as-path-set?         -> /rpol:routing-policy/defined-sets/bgp-pol:bgp-defined-sets/as-path-sets/as-path-set/as-path-set-name
+                  |     |  +--rw bgp-pol:match-set-options?   pt:match-set-options-type
+                  |     +--rw bgp-pol:med-eq?                uint32
+                  |     +--rw bgp-pol:origin-eq?             bgp-types:bgp-origin-attr-type
+                  |     +--rw bgp-pol:next-hop-in*           inet:ip-address
+                  |     +--rw bgp-pol:local-pref-eq?         uint32
+                  |     +--rw bgp-pol:as-path-length!
+                  |        +--rw bgp-pol:operator?   identityref
+                  |        +--rw bgp-pol:value?      uint32
                   +--rw actions
                      +--rw (route-disposition)?
-                        +--:(accept-route)
-                        |  +--rw accept-route?   empty
-                        +--:(reject-route)
-                           +--rw reject-route?   empty
+                     |  +--:(accept-route)
+                     |  |  +--rw accept-route?          empty
+                     |  +--:(reject-route)
+                     |     +--rw reject-route?          empty
+                     +--rw bgp-pol:bgp-actions
+                        +--rw bgp-pol:set-as-path-prepend!
+                        |  +--rw bgp-pol:repeat-n?   uint8
+                        +--rw bgp-pol:set-community!
+                        |  +--rw (set-community-method)?
+                        |  |  +--:(inline)
+                        |  |  |  +--rw bgp-pol:communities*         union
+                        |  |  +--:(reference)
+                        |  |     +--rw bgp-pol:community-set-ref?   -> /rpol:routing-policy/defined-sets/bgp-pol:bgp-defined-sets/community-sets/community-set/community-set-name
+                        |  +--rw bgp-pol:options?             bgp-set-community-option-type
+                        +--rw bgp-pol:set-route-origin?      bgp-types:bgp-origin-attr-type
+                        +--rw bgp-pol:set-local-pref?        uint32
+                        +--rw bgp-pol:set-next-hop?          bgp-next-hop-type
+                        +--rw bgp-pol:set-med?               bgp-set-med-type
